@@ -14,7 +14,7 @@ if ($login_type == 'quick'){
 
     if (array_key_exists('negative_button', $_POST) && $_POST['negative_button']){
         $bypass_mac_lookup = TRUE;
-        $html_form_hidden_fields_array = array(
+        $hidden_fields_array = array(
             'access_point_mac' => $access_point_mac,
             'client_mac' => $client_mac,
             'seconds_allowed' => $seconds_allowed
