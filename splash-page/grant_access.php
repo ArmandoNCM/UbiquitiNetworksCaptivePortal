@@ -10,7 +10,7 @@ $unifi->login();
 
 $unifi->authorize_guest($client_mac, $minutes, NULL, NULL, NULL, $access_point_mac);
 
-header('Location: '.$destinationl);
+header('Location: '.$destination);
 
 exit();
 
