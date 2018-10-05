@@ -3,13 +3,8 @@ require_once(dirname(__FILE__).'/../class/Log.php');
 require_once(dirname(__FILE__).'/../class/Utils.php');
 require_once(dirname(__FILE__).'/../constants.php');
 
-$token = $_POST['token'];
-$username = $_POST['email'];
 $client_mac = $_POST['client_mac'];
 $access_point_mac = $_POST['access_point_mac'];
-$controller_ip = $_POST['controller_ip'];
-$controller_port = $_POST['controller_port'];
-$wlan_identifier = $_POST['wlan_identifier'];
 $login_type = $_POST['login_type'];
 $seconds_allowed = $_POST['seconds_allowed'];
 
@@ -20,9 +15,11 @@ if ($login_type == 'quick'){
     if (array_key_exists('negative_button', $_POST) && $_POST['negative_button']){
         $bypass_mac_lookup = TRUE;
         $html_form_hidden_fields_array = array(
-            // TODO rebuild
+            'access_point_mac' => $access_point_mac,
+            'client_mac' => $client_mac,
+            'seconds_allowed' => $seconds_allowed
         );
-        // require_once(dirname(__FILE__) . '/../../../splash-page/index.php');
+        require_once(dirname(__FILE__) . '/prepare_login.php');
         return;
     }
 } else {

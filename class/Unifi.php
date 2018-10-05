@@ -46,14 +46,14 @@ THE SOFTWARE.
 define('API_CLASS_VERSION', '1.0.5');
 
 class Unifi {
-   public $user         = 'TrinitipTech';
-   public $password     = 'Trinitip2018*';
+   public $user         = '';
+   public $password     = '';
    public $site         = 'default';
    public $baseurl      = 'https://127.0.0.1:8443';
    public $version      = '4.8.15';
    public $is_loggedin  = false;
    private $cookies     = '/tmp/unifi_browser';
-   public $debug        = true;
+   public $debug        = false;
 
    function __construct($user = '', $password = '', $baseurl = '', $site = '', $version = '') {
       if (!empty($user)) $this->user          = $user;

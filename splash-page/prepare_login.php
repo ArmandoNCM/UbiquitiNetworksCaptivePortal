@@ -37,21 +37,20 @@ $html_form_process_url = '/guest/s/default/splash-page/form_processing.php'; // 
 
 if (isset($hidden_fields_array)){
 
-    // if (isset($bypass_mac_lookup) && $bypass_mac_lookup){
-        // $html_page = 'full_login';
-    // } else {
+    if (isset($bypass_mac_lookup) && $bypass_mac_lookup){
+        $html_page = 'full_login';
+    } else {
 
-        // if (isset($isBanned) && $isBanned){
-            // $html_page = 'banned_page';
-        // } else {
+        if (isset($isBanned) && $isBanned){
+            $html_page = 'banned_page';
+        } else {
             if (isset($personName)){
                 $html_page = 'quick_login';
-                // $html_page = 'grant_access';
             } else {
                 $html_page = 'full_login';
             }
-        // }
-    // }
+        }
+    }
 }
 
 switch ($html_page){
