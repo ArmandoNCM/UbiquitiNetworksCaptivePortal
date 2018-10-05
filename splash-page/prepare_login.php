@@ -45,8 +45,8 @@ if (isset($hidden_fields_array)){
             // $html_page = 'banned_page';
         // } else {
             if (isset($personName)){
-                // $html_page = 'quick_login';
-                $html_page = 'grant_access';
+                $html_page = 'quick_login';
+                // $html_page = 'grant_access';
             } else {
                 $html_page = 'full_login';
             }
