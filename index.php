@@ -3,8 +3,8 @@ require_once(dirname(__FILE__).'/constants.php');
 require_once(dirname(__FILE__).'/class/Log.php');
 require_once(dirname(__FILE__).'/class/Utils.php');
 
-$client_mac = $_GET['id'];
-$access_point_mac = $_GET['ap'];
+$client_mac = strtoupper($_GET['id']);
+$access_point_mac = strtoupper($_GET['ap']);
 $ssid = $_GET['ssid'];
 
 Log::print("Received GET from $client_mac", "message", __FILE__, __LINE__);
