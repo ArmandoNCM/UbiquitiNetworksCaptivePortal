@@ -1,10 +1,12 @@
 <?php
+Log::print("Authenticating Client with MAC Address: $client_mac", "info", __FILE__, __LINE__);
+
 require_once(dirname(__FILE__).'/../class/Unifi.php');
 
-$destination = "https://www.google.com/";
-$minutes = $seconds_allowed / 60;
+$destination = "http://www.cundinamarca.gov.co/";
+$minutes = 60 * 24;
 
-$unifi = new Unifi('TrinitipTech', 'Trinitip2018*', NULL, NULL, NULL);
+$unifi = new Unifi('mpascuas', 'IPwork2018', NULL, NULL, NULL);
 
 $unifi->login();
 

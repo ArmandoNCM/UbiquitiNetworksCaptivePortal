@@ -49,7 +49,7 @@ class Unifi {
    public $user         = '';
    public $password     = '';
    public $site         = 'default';
-   public $baseurl      = 'https://127.0.0.1:8443';
+   public $baseurl      = 'https://186.155.245.183:8443';
    public $version      = '4.8.15';
    public $is_loggedin  = false;
    private $cookies     = '/tmp/unifi_browser';

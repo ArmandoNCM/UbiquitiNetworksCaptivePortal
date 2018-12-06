@@ -1,85 +1,63 @@
 <?php
-require_once(dirname(__FILE__).'/../class/Log.php');
-require_once(dirname(__FILE__).'/../class/Utils.php');
-require_once(dirname(__FILE__).'/../constants.php');
+require_once(dirname(__FILE__) . '/../class/Log.php');
+require_once(dirname(__FILE__) . '/../class/Utils.php');
+require_once(dirname(__FILE__) . '/../constants.php');
 
 $client_mac = $_POST['client_mac'];
 $access_point_mac = $_POST['access_point_mac'];
-$login_type = $_POST['login_type'];
-$seconds_allowed = $_POST['seconds_allowed'];
 
 $valid_fields = TRUE;
 
-if ($login_type == 'quick'){
+// TODO Check name and email and in case of error, show form with error and retry
+$person_name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
+//Email Validation
+$person_email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
 
-    if (array_key_exists('negative_button', $_POST) && $_POST['negative_button']){
-        $bypass_mac_lookup = TRUE;
-        $hidden_fields_array = array(
-            'access_point_mac' => $access_point_mac,
-            'client_mac' => $client_mac,
-            'seconds_allowed' => $seconds_allowed
-        );
-        require_once(dirname(__FILE__) . '/prepare_login.php');
-        return;
-    }
+$age = filter_input(INPUT_POST, "age", FILTER_SANITIZE_STRING);
+$state = filter_input(INPUT_POST, "state", FILTER_SANITIZE_STRING);
+$city = filter_input(INPUT_POST, "city", FILTER_SANITIZE_STRING);
+$identification_document = filter_input(INPUT_POST, "id_number", FILTER_SANITIZE_STRING);
+$identification_document = Tool::remove_non_numeric_characters($identification_document);
+
+if ($person_email) {
+    strtolower(trim($person_email));
 } else {
-    $full_login = TRUE;
-    // TODO Check name and email and in case of error, show form with error and retry
-    $person_name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
-    //Email Validation
-    $person_email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
-
-    $birthdate = filter_input(INPUT_POST, "birthdate", FILTER_SANITIZE_STRING);
-
-    $gender = filter_input(INPUT_POST, "gender", FILTER_SANITIZE_STRING);
-
-    if ($person_email){
-        strtolower(trim($person_email));
-    } else {
-        Log::print("Error in the email validation.", "error", __FILE__, __LINE__);
-        $valid_fields = FALSE;
-    }
+    Log::print("Error in the email validation.", "error", __FILE__, __LINE__);
+    $valid_fields = FALSE;
 }
 
 if ($valid_fields) {
 
-    $eventMessage = array(
-        'nodeMac' => $access_point_mac,
+    $bodyArray = array(
         'mac' => $client_mac,
-        'eventType' => 'in'
+        'state' => $state,
+        'city' => $city,
+        'name' => $person_name,
+        'email' => $person_email,
+        'age' => $age
     );
 
-    if ($full_login){
-        $eventMessage['name'] = $person_name;
-        $eventMessage['email'] = $person_email;
-        $eventMessage['gender'] = $gender;
-        $eventMessage['birthdate'] = $birthdate; // TODO change to 'birthdate'
-    }
+    $bodyJson = json_encode($bodyArray);
 
-    $apiUrl = constant('API_URL') . 'ap/indoorEvents';
-    $response = Tool::perform_http_request('POST', $apiUrl, json_encode($eventMessage));
+    $apiUrl = constant('API_URL') . '/exhibition-forms/expo-cund';
+    $apiResponse = Tool::perform_http_request('POST', $apiUrl, $bodyJson);
 
-    if ($response && array_key_exists('response_code', $response)){
-        $response_code = $response['response_code'];
-        if ($response_code == 200){
+    if (isset($apiResponse) && array_key_exists('response_code', $apiResponse)) {
 
-            $body = json_decode($response['response_body']);
-
-            if ($body->isVerified){
-                // TODO do something
-            } else {
-                // TODO do something
-            }
-            
+        if ($apiResponse['response_code'] == 201) {
+            // Registry successful
+            Log::print("Successfully registered person on device with mac: $client_mac", 'message', __FILE__, __LINE__);
         } else {
-            Log::print("Creation of IN event failed with HTTP Code: $response_code", "error", __FILE__, __LINE__);
-            Log::print("Response Body: " . $response['response_body'], "error", __FILE__, __LINE__);
+            // Something went wrong
+            Log::print("Something went wrong trying to register person on device with mac: $client_mac\nThe service responded with HTTP Code: " . $apiResponse['response_code'], 'error', __FILE__, __LINE__);
+
+            Log::print("Response Body:\n\n" . $apiResponse['response_body'], 'debug', __FILE__, __LINE__);
         }
     } else {
-        Log::print("Creation of IN event failed, couldn't successfully consume 'indoorEvents' WS", "error", __FILE__, __LINE__);
+        Log::print("The person registry API could not be consumed", 'error', __FILE__, __LINE__);
     }
- 
-    require_once(dirname(__FILE__).'/grant_access.php');   
+
+    require_once(dirname(__FILE__) . '/grant_access.php');
 }
 
 ?>

@@ -54,5 +54,11 @@ class Tool {
 
         return $response;
     }
+
+    public static function remove_non_numeric_characters($subject){
+        $pattern = "/[^0-9]/";
+        $replacement = '';
+        return preg_replace (  $pattern , $replacement ,  $subject );
+    }
 }
 ?>
