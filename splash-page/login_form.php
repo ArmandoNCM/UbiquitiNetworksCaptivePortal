@@ -9,10 +9,8 @@ $jsonStates = json_decode(file_get_contents(dirname(__FILE__) . '/assets/states.
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/guest/s/default/splash-page/assets/css/styles.css">
-    <link rel="stylesheet" type="text/css" href="/guest/s/default/splash-page/assets/css/anypicker.css"/>
-    <script type="text/javascript"
-            src="/guest/s/default/splash-page/assets/js/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="/guest/s/default/splash-page/assets/js/anypicker.js"></script>
+    <script type="text/javascript" src="/guest/s/default/splash-page/assets/js/jquery-1.11.1.min.js"></script>
+    
     <script type="text/javascript">
 
         function disableButton() {
