@@ -2,8 +2,12 @@
 Log::print("Authenticating Client with MAC Address: $client_mac", "info", __FILE__, __LINE__);
 
 require_once(dirname(__FILE__).'/../class/Unifi.php');
+if ($open_external_browser) {
+    $destination = "googlechrome://navigate?url=https://redirect.sundevs.cloud/index.html";
+} else {
+    $destination = "https://redirect.sundevs.cloud/index.html";
+}
 
-$destination = "http://www.cundinamarca.gov.co/";
 $minutes = 60 * 24;
 
 $unifi = new Unifi('mpascuas', 'IPwork2018', NULL, NULL, NULL);

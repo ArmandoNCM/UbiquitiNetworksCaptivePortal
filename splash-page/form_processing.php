@@ -13,6 +13,7 @@ $person_name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
 //Email Validation
 $person_email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
 
+$open_external_browser = $_POST['open_external_browser'];
 $age = filter_input(INPUT_POST, "age", FILTER_SANITIZE_STRING);
 $state = filter_input(INPUT_POST, "state", FILTER_SANITIZE_STRING);
 $city = filter_input(INPUT_POST, "city", FILTER_SANITIZE_STRING);

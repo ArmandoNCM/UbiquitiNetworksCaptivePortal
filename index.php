@@ -4,6 +4,11 @@ require_once(dirname(__FILE__).'/constants.php');
 require_once(dirname(__FILE__).'/class/Log.php');
 require_once(dirname(__FILE__).'/class/Utils.php');
 
+$browserData = get_browser(NULL, TRUE);
+$browser = $browserData['browser'];
+$platform = $browserData['platform'];
+Log::print("Browser and Platform: $browser & $platform", "info", __FILE__, __LINE__);
+
 // Get authorization data
 $client_mac = strtoupper($_GET['id']);
 $access_point_mac = strtoupper($_GET['ap']);
@@ -12,7 +17,8 @@ Log::print("Redirecting unauthenticated traffic by MAC: $client_mac", "message",
 
 $hidden_fields_array = array(
     'access_point_mac' => $access_point_mac,
-    'client_mac' => $client_mac
+    'client_mac' => $client_mac,
+    'open_external_browser' => ($platform === 'Android')
 );
 
 // $apiUrl = constant('API_URL') . '/exhibition-forms/expo-students/exists/' . $client_mac;
