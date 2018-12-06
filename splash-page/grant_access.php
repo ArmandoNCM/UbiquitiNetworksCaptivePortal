@@ -3,9 +3,9 @@ Log::print("Authenticating Client with MAC Address: $client_mac", "info", __FILE
 
 require_once(dirname(__FILE__).'/../class/Unifi.php');
 if ($open_external_browser) {
-    $destination = "googlechrome://navigate?url=https://redirect.sundevs.cloud/index.html";
+    $destination = "googlechrome://navigate?url=https://redirect.sundevs.cloud";
 } else {
-    $destination = "https://redirect.sundevs.cloud/index.html";
+    $destination = "https://redirect.sundevs.cloud";
 }
 
 $minutes = 60 * 24;
