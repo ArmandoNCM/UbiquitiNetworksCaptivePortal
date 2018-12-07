@@ -35,7 +35,7 @@ $jsonStates = json_decode(file_get_contents(dirname(__FILE__) . '/assets/states.
 </head>
 <body>
 <div id="container">
-    <img src="/guest/s/default/splash-page/assets/images/high_resolution_header.png" id="logo">
+    <img style="max-width:50%;max-height:50%;" src="/guest/s/default/splash-page/assets/images/high_resolution_header.png" id="logo">
     <h1>Conéctate y disfruta de nuestra red wifi gratis </h1>
     <div class="form-container col-5">
         <form method="post" onsubmit="disableButton()" action="<?php echo $html_form_process_url ?>">
