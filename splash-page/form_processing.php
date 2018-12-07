@@ -15,6 +15,7 @@ $person_email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
 
 $open_external_browser = $_POST['open_external_browser'];
 $age = filter_input(INPUT_POST, "age", FILTER_SANITIZE_STRING);
+$age = Tool::remove_non_numeric_characters($age);
 $state = filter_input(INPUT_POST, "state", FILTER_SANITIZE_STRING);
 $city = filter_input(INPUT_POST, "city", FILTER_SANITIZE_STRING);
 $identification_document = filter_input(INPUT_POST, "id_number", FILTER_SANITIZE_STRING);
